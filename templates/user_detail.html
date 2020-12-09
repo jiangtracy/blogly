@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <img class="img-thumbnail" src="{{ img_source }}" alt="profile image">
+  <h1>{{  }} {{  }}</h1>
+    <div class="container">
+      <form action="/" class="form-control">
+        <button class="btn btn-primary" type="button">Edit</button>
+        <button class="btn btn-danger" type="button">Delete</button>
+      </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
