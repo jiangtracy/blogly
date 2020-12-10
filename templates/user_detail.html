@@ -3,12 +3,16 @@
 {% block content %}
 
 <div class="container">
-  <img class="img-thumbnail" src="{{ img_source }}" alt="profile image">
-  <h1>{{  }} {{  }}</h1>
-    <div class="container">
-      <form action="/" class="form-control">
-        <button class="btn btn-primary" type="button">Edit</button>
-        <button class="btn btn-danger" type="button">Delete</button>
+  <img class="img-fluid user-pic" src="{{ url }}" alt="profile image">
+  <h1>{{ full_name }}</h1>
+    <div>
+      <form action="/users/{{ user_id }}/edit" class="">
+        <button class="btn btn-primary">Edit</button>
+      </form>
+      <form action="/users/{{ user_id }}/delete" 
+      method="POST" 
+      class="">
+        <button class="btn btn-danger">Delete</button>
       </form>
     </div>
 </div>

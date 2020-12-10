@@ -4,21 +4,30 @@
 
 <div class="container">
   <h1>Create a user</h1>
-  <form action="/" class="form-control">
-    <div class="container">
+  <form action="/users/new" method="POST" class="">
+    <div>
       <label for="first_name">First Name</label>
-      <input type="text" name="first_name" placeholder="Enter a first name">
+      <input 
+        type="text" 
+        name="first_name" 
+        placeholder="Enter a first name">
     </div>
-    <div class="container">
+    <div>
       <label for="last_name">Last Name</label>
-      <input type="text" name="last_name" placeholder="Enter a last name">
+      <input 
+        type="text" 
+        name="last_name" 
+        placeholder="Enter a last name">
     </div>
-    <div class="container">
-      <label for="img-url">Last Name</label>
-      <input type="url" name="img-url" placeholder="Provide an image of this user">
+    <div>
+      <label for="pic-url">Image URL</label>
+      <input 
+        type="url" 
+        name="pic-url" 
+        placeholder="Provide an image for this user">
     </div>
-    <div class="container">
-      <button class="btn btn-success" type="button">Add</button>
+    <div>
+      <button class="btn btn-success">Add</button>
     </div>
   </form>
 </div>
