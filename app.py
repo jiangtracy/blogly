@@ -52,8 +52,7 @@ def add_user():
 
     first_name = request.form['first_name'].lower().capitalize()
     last_name = request.form['last_name'].lower().capitalize()
-    pic_url = request.form['pic-url']
-
+    pic_url = request.form['pic-url'] or None
     new_user = User(first_name=first_name,
                     last_name=last_name,
                     pic_url=pic_url)
