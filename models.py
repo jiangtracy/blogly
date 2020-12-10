@@ -33,3 +33,24 @@ class User(db.Model):
         """ returns full name of user """
 
         return f"{self.first_name} {self.last_name}"
+
+    posts = db.relationship('Post', backref='users')
+
+
+class Post(db.Model):
+    """ User class """
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    title = db.Column(db.Text,
+                      nullable=False)
+    content = db.Column(db.Text,
+                        nullable=False)
+    created_at = db.Column(db.DateTime,
+                           nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'))
+

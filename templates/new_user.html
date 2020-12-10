@@ -2,12 +2,13 @@
 
 {% block content %}
 
-<div class="container">
+<div>
   <h1>Create a user</h1>
   <form action="/users/new" method="POST" class="">
     <div>
       <label for="first_name">First Name</label>
       <input 
+        id="first_name"
         type="text" 
         name="first_name" 
         placeholder="Enter a first name">
@@ -15,6 +16,7 @@
     <div>
       <label for="last_name">Last Name</label>
       <input 
+        id="last_name"
         type="text" 
         name="last_name" 
         placeholder="Enter a last name">
@@ -22,6 +24,7 @@
     <div>
       <label for="pic_url">Image URL</label>
       <input 
+        id="pic_url"
         type="url" 
         name="pic_url" 
         placeholder="Provide an image for this user">

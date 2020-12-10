@@ -15,8 +15,16 @@
     <div class="container">
       <form>
         <button class="btn btn-secondary btn-sm mb-3" formaction="/users">Home</button>
-    </form>
-    </div>
+      </form>
+    
+      {% for msg in get_flashed_messages() %}
+        <div class="alert alert-warning text-center">
+            {{ msg }}
+        </div>
+      {% endfor %}
         {% block content %}CONTENT HERE{% endblock %}
+    </div>
   </body>
 </html>
+
+<!-- show fname validation msg -->

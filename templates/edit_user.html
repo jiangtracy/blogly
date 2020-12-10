@@ -2,12 +2,13 @@
 
 {% block content %}
 
-<div class="container">
+<div>
   <h1>Edit a user</h1>
   <form class="">
     <div>
       <label for="first_name">First Name</label>
       <input 
+        id="first_name"
         type="text" 
         name="first_name" 
         value ="{{ f_name }}">
@@ -15,13 +16,15 @@
     <div>
       <label for="last_name">Last Name</label>
       <input 
+        id="last_name"
         type="text" 
         name="last_name" 
         value ="{{ l_name }}">
     </div>
     <div>
-      <label for="img-url">Image URL</label>
+      <label for="pic_url">Image URL</label>
       <input 
+        id="pic_url"
         type="url" 
         name="pic_url" 
         value ="{{ url }}">

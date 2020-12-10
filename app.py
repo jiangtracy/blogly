@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
@@ -37,7 +37,7 @@ def shows_users_list():
 
 
 @app.route('/users/new')
-def shows_new_form():
+def shows_new_user_form():
     """ displays an add new user form """
 
     return render_template('new_user.html')
@@ -51,8 +51,11 @@ def add_user():
     """
 
     first_name = request.form['first_name'].lower().capitalize()
+    if first_name == '':
+        flash('Please Enter a First Name')
+        return redirect("/users/new")
     last_name = request.form['last_name'].lower().capitalize()
-    pic_url = request.form['pic_url'] or None
+    pic_url = request.form['pic_url'] or ''
     new_user = User(first_name=first_name,
                     last_name=last_name,
                     pic_url=pic_url)
@@ -76,8 +79,8 @@ def show_user_info(user_id):
                            url=user.pic_url)
 
 
-@app.route('/users/<user_id>/edit')
-def show_edit_form(user_id):
+@app.route('/users/<int:user_id>/edit')
+def show_edit_user_form(user_id):
     """ shows page with new_user-like form
         with field values of current info.
     """
@@ -90,7 +93,7 @@ def show_edit_form(user_id):
                            url=user.pic_url)
 
 
-@app.route('/users/<user_id>/edit', methods=['POST'])
+@app.route('/users/<int:user_id>/edit', methods=['POST'])
 def edit_user_info(user_id):
     """ changes user info in database and redirects user to users list.
     """

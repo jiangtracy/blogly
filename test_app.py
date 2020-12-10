@@ -25,11 +25,10 @@ class ConversionAppTestCase(TestCase):
         with self.client as client:
             response = client.get('/users')
 
-            # test that you're getting a template
             html = response.get_data(as_text=True)
 
             self.assertEqual(response.status_code, 200)
-            self.assertIn('<form action="/users/new">', html)
+            self.assertIn('/users/new', html)
 
     def test_show_user_info(self):
         """ make sure user info page displays """
@@ -40,7 +39,6 @@ class ConversionAppTestCase(TestCase):
             user_id = test_user.id
             response = client.get(f'/users/{user_id}')
 
-            # test that you're getting a template
             html = response.get_data(as_text=True)
 
             if test_user is None:
