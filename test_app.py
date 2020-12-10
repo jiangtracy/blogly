@@ -39,11 +39,11 @@ class ConversionAppTestCase(TestCase):
             test_user = User.query.first()
             user_id = test_user.id
             response = client.get(f'/users/{user_id}')
-      
+
             # test that you're getting a template
             html = response.get_data(as_text=True)
 
-            if test_user == None:
+            if test_user is None:
                 self.assertEqual(response.status_code, 404)
             else:
                 self.assertEqual(response.status_code, 200)
@@ -52,33 +52,23 @@ class ConversionAppTestCase(TestCase):
     def test_add_new_user(self):
         """ Test if new user is added to the database """
 
+        post_body = {
+            'first_name': 'Test8',
+            'last_name': 'Test1',
+            'pic_url': ''
+            }
+
         with self.client as client:
-            user = client.post("/users/new", json={
-                        'first_name': 'Test1',
-                        'last_name': 'Test1',
-                        'pic_url': None
-                        })
+            client.post("/users/new", data=post_body)
 
-        print(user)
+        self.assertTrue(User.query.filter(User.first_name == 'Test8'))
 
-        # new_user = User(first_name='Test',
-        #                 last_name='Test1',
-        #                 pic_url=None)
+    def test_delete_user(self):
+        """ Test deletion of user from database """
 
-        # db.session.add(new_user)
-        # db.session.commit()
+        user = User.query.filter(User.first_name == 'Test8').first()
 
-        # self.assertTrue(User.query.filter(User.first_name == 'Test')) 
+        db.session.delete(user)
+        db.session.commit()
 
-    # def test_delete_user(self):
-    #     """ Test delete user """
-
-    #     user = User.query.filter(User.first_name == 'Test').first()
-
-    #     db.session.delete(user)
-    #     db.session.commit()
-
-    #     print('userrrrrrrrrrrrrrrrrrr', User.query.filter(User.first_name == 'Test').first())
-
-
-    #     # self.assertFalse(User.query.filter(User.first_name == 'Test'))
+        self.assertFalse(User.query.get(user.id))
