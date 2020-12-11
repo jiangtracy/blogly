@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
 
@@ -49,8 +50,10 @@ class Post(db.Model):
                       nullable=False)
     content = db.Column(db.Text,
                         nullable=False)
-    created_at = db.Column(db.DateTime,
-                           nullable=False)
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.id'))
+    created_at = db.Column(db.DateTime,
+                           nullable=False,
+                           default=datetime.datetime.utcnow)
+    
 

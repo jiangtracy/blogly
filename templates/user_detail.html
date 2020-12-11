@@ -6,15 +6,27 @@
   <img class="img-fluid user-pic" src="{{ url }}" alt="profile image">
   <h1>{{ full_name }}</h1>
     <div>
-      <form action="/users/{{ user_id }}/edit">
-        <button class="btn btn-primary">Edit</button>
+      <form>
+        <button class="btn btn-primary" formaction="/users/{{ user_id }}/edit" >Edit</button>
+        <button class="btn btn-danger" formaction="/users/{{ user_id }}/delete" formmethod="POST">Delete</button>
       </form>
-      <form 
-        action="/users/{{ user_id }}/delete" 
-        method="POST" 
-        class="">
-        <button class="btn btn-danger">Delete</button>
-      </form>
+    </div>
+    <div>
+      <h2>Posts</h2>
+      <div>
+        <ul>
+          <!-- loop -->
+          {% for post in posts %}
+          <li>
+            <a href="/posts/{{ post.id  }}">
+              {{ post.title }}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div>
+      <a href="/users/{{ user_id }}/posts/new" class="btn btn-primary">Add Post</a>
     </div>
 </div>
 
