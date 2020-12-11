@@ -5,20 +5,22 @@
 <div>
   <h2>{{ post.title }}</h2>
   <p>{{ post.content }}<br><br>
-    By {{ post.users.full_name }} 
+    By: {{ post.user.full_name }} 
   </p>
-  <div class="mr-auto">
+  <form class="mr-auto">
     <a
       href="/users/{{ post.user_id }}"
-      class="btn btn-outline-primary">Cancel
+      class="btn btn-outline-primary">Back
     </a>
     <a
       href="/posts/{{ post.id }}/edit"
       class="btn btn-primary">Edit
     </a>
-    <a
-      href="/posts/{{ post.id }}/delete"
+    <button
+      formaction="/posts/{{ post.id }}/delete"
+      formmethod="POST"
       class="btn btn-danger">Delete
-    </a>
+    </button>
+  </form>
 
-</div>
+{% endblock %}

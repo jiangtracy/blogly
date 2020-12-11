@@ -14,7 +14,9 @@
   <body>
     <div class="container">
       <form>
-        <button class="btn btn-secondary btn-sm mb-3" formaction="/users">Home</button>
+        <button 
+          class="btn btn-secondary btn-sm mb-3" 
+          formaction="/users">Home</button>
       </form>
     
       {% for msg in get_flashed_messages() %}
@@ -22,7 +24,7 @@
             {{ msg }}
         </div>
       {% endfor %}
-        {% block content %}CONTENT HERE{% endblock %}
+      {% block content %} CONTENT HERE {% endblock %}
     </div>
   </body>
 </html>

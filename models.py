@@ -35,7 +35,7 @@ class User(db.Model):
 
         return f"{self.first_name} {self.last_name}"
 
-    posts = db.relationship('Post', backref='users')
+    posts = db.relationship('Post', backref='user')
 
 
 class Post(db.Model):
@@ -51,9 +51,8 @@ class Post(db.Model):
     content = db.Column(db.Text,
                         nullable=False)
     user_id = db.Column(db.Integer,
+                        nullable=False,
                         db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime,
                            nullable=False,
                            default=datetime.datetime.utcnow)
-    
-

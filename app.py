@@ -55,7 +55,7 @@ def add_user():
         flash('Please Enter a First Name')
         return redirect("/users/new")
     last_name = request.form['last_name'].lower().capitalize()
-    pic_url = request.form['pic_url'] or ''
+    pic_url = request.form['pic_url'] or None
     new_user = User(first_name=first_name,
                     last_name=last_name,
                     pic_url=pic_url)
@@ -119,10 +119,15 @@ def delete_user(user_id):
     """ deletes users info from database
     """
     user = User.query.get_or_404(user_id)
+    # delete all users posts first
 
     db.session.delete(user)
     db.session.commit()
     return redirect('/users')
+
+##################################################################
+############################### POST ROUTES ######################
+##################################################################
 
 
 @app.route('/users/<int:user_id>/posts/new')
@@ -137,20 +142,21 @@ def display_new_post_form(user_id):
 def create_new_post(user_id):
     """ Handle add form; add post and redirect to the user detail page. """
 
-    # grab form data
     title = request.form['title']
     content = request.form['content']
 
-    # add to database
-    new_post = Post(title=title,
-                    content=content,
-                    user_id=user_id)
-    db.session.add(new_post)
+    user = User.query.get_or_404(user_id)
+
+    user.posts.append(Post(title=title,
+                           content=content,
+                           user_id=user_id))
+
     db.session.commit()
 
     return redirect(f'/users/{user_id}')
 
-@app.route('/posts/<post_id>')
+
+@app.route('/posts/<int:post_id>')
 def display_post_detail(post_id):
     """ show a post with buttons to edit and delete"""
     post = Post.query.get_or_404(post_id)
@@ -158,21 +164,20 @@ def display_post_detail(post_id):
     return render_template('post_detail.html', post=post)
 
 
-@app.route('/posts/<post_id>/edit')
+@app.route('/posts/<int:post_id>/edit')
 def show_edit_post_form(post_id):
     """ Show form to edit a post, and to cancel (back to user page). """
     post = Post.query.get_or_404(post_id)
 
     return render_template('edit_post.html', post=post)
 
-@app.route('/posts/<post_id>/edit', methods=['POST'])
+
+@app.route('/posts/<int:post_id>/edit', methods=['POST'])
 def handle_edit_post_form(post_id):
     """ Handle editing of a post. Redirect back to the post view.  """
     title = request.form['title']
     content = request.form['content']
-
-
-    # add to database
+# implement validation
     post = Post.query.get_or_404(post_id)
     post.title = title
     post.content = content
@@ -180,14 +185,14 @@ def handle_edit_post_form(post_id):
 
     return redirect(f'/posts/{post_id}')
 
-@app.route('/posts/<post_id>/delete', methods=['POST'])
+# fix view function names... again
+
+@app.route('/posts/<int:post_id>/delete', methods=['POST'])
 def delete_post(post_id):
     """ Delete the post """
     post = Post.query.get_or_404(post_id)
-    user_id = post.user_id
 
     db.session.delete(post)
     db.session.commit()
 
-    return redirect(f'/users/{user_id}')
-
+    return redirect(f'/users/{post.user_id}')
