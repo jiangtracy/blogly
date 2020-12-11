@@ -119,14 +119,19 @@ def delete_user(user_id):
     """ deletes users info from database
     """
     user = User.query.get_or_404(user_id)
-    # delete all users posts first
+
+    # delete all users posts before removing user
+    users_posts = Post.query.filter_by(user_id=user_id).all()
+    for entry in users_posts:
+        db.session.delete(entry)
 
     db.session.delete(user)
     db.session.commit()
+    flash(f"User {user.full_name} deleted.")
     return redirect('/users')
 
 ##################################################################
-############################### POST ROUTES ######################
+########################## POST ROUTES ###########################
 ##################################################################
 
 
@@ -177,7 +182,8 @@ def handle_edit_post_form(post_id):
     """ Handle editing of a post. Redirect back to the post view.  """
     title = request.form['title']
     content = request.form['content']
-# implement validation
+    
+    # implement validation
     post = Post.query.get_or_404(post_id)
     post.title = title
     post.content = content
@@ -185,7 +191,6 @@ def handle_edit_post_form(post_id):
 
     return redirect(f'/posts/{post_id}')
 
-# fix view function names... again
 
 @app.route('/posts/<int:post_id>/delete', methods=['POST'])
 def delete_post(post_id):
