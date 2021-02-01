@@ -27,16 +27,16 @@ class ConversionAppTestCase(TestCase):
         
         self.user = user
 
-    # def test_users_list_page(self):
-    #     """Make sure HTML is displayed"""
+    def test_users_list_page(self):
+        """Make sure HTML is displayed"""
 
-    #     with self.client as client:
-    #         response = client.get('/users')
+        with self.client as client:
+            response = client.get('/users')
 
-    #         html = response.get_data(as_text=True)
+            html = response.get_data(as_text=True)
 
-    #         self.assertEqual(response.status_code, 200)
-    #         self.assertIn('/users/new', html)
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('/users/new', html)
 
     # def test_show_user_info(self):
     #     """ make sure user info page displays """
